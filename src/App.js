@@ -1,23 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import AppRouter from "./AppRouter";
+
+export const MAFIA_STATES = {
+  LOGIN: 'login',
+  LOBBY: 'lobby',
+  GAME: 'game'
+}
+
+const defaultState = {
+  mafiaScreen: MAFIA_STATES.LOGIN
+}
+
+const GlobalStateContext = React.createContext(defaultState);
+const DispatchStateContext = React.createContext(undefined);
+
+
+const GlobalStateProvider = ({ children }) => {
+  const [state, dispatch] = React.useReducer(
+    (state, newValue) => ({ ...state, ...newValue }),
+    defaultState
+  );
+  return (
+    <GlobalStateContext.Provider value={state}>
+      <DispatchStateContext.Provider value={dispatch}>
+        {children}
+      </DispatchStateContext.Provider>
+    </GlobalStateContext.Provider>
+  );
+};
+
+export const useGlobalState = () => [
+  React.useContext(GlobalStateContext),
+  React.useContext(DispatchStateContext)
+];
 
 function App() {
   return (
-    <div className="App">
-      <img src={logo} className="App-logo" alt="logo" />
-      <p>
-        Mafia app
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-    </div>
+    <GlobalStateProvider>
+      <div className="App">
+        <AppRouter />
+      </div>
+    </GlobalStateProvider>
   );
 }
 
