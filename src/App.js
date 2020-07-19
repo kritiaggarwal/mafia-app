@@ -12,8 +12,8 @@ const defaultState = {
   mafiaScreen: MAFIA_STATES.LOGIN
 }
 
-const GlobalStateContext = React.createContext(defaultState);
-const DispatchStateContext = React.createContext(undefined);
+const GlobalStateContext = React.createContext(defaultState); // to read
+const DispatchStateContext = React.createContext(undefined); // to write
 
 
 const GlobalStateProvider = ({ children }) => {
