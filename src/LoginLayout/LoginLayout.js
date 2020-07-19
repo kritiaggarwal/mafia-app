@@ -1,11 +1,13 @@
 import React from 'react';
-import {MAFIA_STATES, useGlobalState} from '../App';
+import InputLayout from "./InputLayout";
+import { Image, Box } from '@fluentui/react';
+import logo from "../Logo.png"
+
 function LoginLayout() {
-  const [state, dispatch] = useGlobalState();
   return (
-      <div>
-        LoginLayout
-        <button onClick={() => dispatch({mafiaScreen: MAFIA_STATES.LOBBY})}>Create Game</button>
+      <div style={{minHeight: "65vh", minWidth: "100vw", display: "flex", justifyContent: "center", padding: "150px 0px 0px 0px"}}>
+        <InputLayout />
+        <Image width={300} src={logo} />
       </div>
   );
 }
