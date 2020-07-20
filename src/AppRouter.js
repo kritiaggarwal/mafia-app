@@ -9,6 +9,7 @@ import FullScreenSpinner from "./FullScreenSpinner/FullScreenSpinner";
 function RenderView() {
   const [state, dispatch] = useGlobalState();
 
+  // REALLY BAD WAY TO CODE - JUST DOING THINGS QUICKLY
   const onGameCreate = (name) => {
     dispatch({mafiaScreen: MAFIA_STATES.LOAD});
     // make network call to create game with name
