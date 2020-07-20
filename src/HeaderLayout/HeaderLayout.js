@@ -5,8 +5,8 @@ import headerLogo from "../HeaderLogo.png"
 
 function HeaderLayout() {
   const [state] = useGlobalState();
-  const showDiv = state['mafiaScreen'] == MAFIA_STATES.GAME;
-  const showRound = state['mafiaScreen'] == MAFIA_STATES.GAME;
+  const showDiv = state['mafiaScreen'] === MAFIA_STATES.GAME;
+  const showRound = state['mafiaScreen'] === MAFIA_STATES.GAME;
   const divText = ""; // todo fill according to game state;
   const roundText = "Round 1"; // todo fill according to game state;
   return (

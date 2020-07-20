@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import {MAFIA_STATES, useGlobalState} from '../App';
 import { TextField, Button } from '@fluentui/react';
 
 const getButtonStyles = (() => ({
@@ -56,14 +55,13 @@ const getCodeTextStyles = (() => ({
 }));
 
 function InputLayout(props) {
-  const [state, dispatch] = useGlobalState();
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
   return (
       <div style={{padding: "50px 100px 0px 0px"}}>
         <TextField label="Name" styles={getNameTextStyles()} placeholder="Enter text here" onBlur={(data) => setName(data.target.value)} />
         <TextField label="Game Code" styles={getCodeTextStyles()} placeholder="Enter code here" onBlur={(data) => setCode(data.target.value)}/>
-        <Button disabled={name == ""} text={code ? "Join Room" : "Create Room"} styles={getButtonStyles()}  onClick={() => code ? props.onGameFetch() : props.onGameCreate()}/>
+        <Button disabled={name === ""} text={code ? "Join Room" : "Create Room"} styles={getButtonStyles()}  onClick={() => code ? props.onGameFetch() : props.onGameCreate()}/>
       </div>
   );
 }

@@ -34,7 +34,7 @@ function GameSettings() {
   const [state, dispatch] = useGlobalState();
   const enoughPlayers = true; // todo read this from some global state post roster syncing
   const gameCode = "HDJF"; // todo read this from state
-  const isOrganizer = true; // todo read this from some state
+  const isOrganizer = true; // todo read this from some state - show text and not button
   return (
       <div style={{padding: "30px 0px 0px 0px", minHeight: "65vh", textAlign: "center", justifyContent: "space-between"}}>
         <div style={{margin: "0px 0px 10px 0px"}}>Invite your friends with this code!</div> 

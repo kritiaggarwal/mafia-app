@@ -1,6 +1,6 @@
 import React from 'react';
 import InputLayout from "./InputLayout";
-import { Image, Box } from '@fluentui/react';
+import { Image } from '@fluentui/react';
 import logo from "../Logo.png"
 
 function LoginLayout(props) {
