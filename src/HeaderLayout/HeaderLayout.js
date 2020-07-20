@@ -8,7 +8,7 @@ function HeaderLayout() {
   const showDiv = state['mafiaScreen'] == MAFIA_STATES.GAME;
   const showRound = state['mafiaScreen'] == MAFIA_STATES.GAME;
   const divText = ""; // todo fill according to game state;
-  const roundText = ""; // todo fill according to game state;
+  const roundText = "Round 1"; // todo fill according to game state;
   return (
       <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
         <Image width={200} src={headerLogo} />

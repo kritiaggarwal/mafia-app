@@ -1,11 +1,12 @@
 import React from 'react';
-import {MAFIA_STATES, useGlobalState} from '../App';
+import GameSettings from "./GameSettings";
+import PlayersGrid from "../PlayersGrid/PlayersGrid";
 
 function LobbyLayout() {
-  const [state, dispatch] = useGlobalState();
   return (
-      <div style={{minHeight: "65vh", minWidth: "100vw", display: "flex", justifyContent: "center", padding: "150px 0px 0px 0px"}}>
-        <button width={"200px"} onClick={() => dispatch({mafiaScreen: MAFIA_STATES.GAME})}>Start Game</button>
+      <div style={{minHeight: "65vh", minWidth: "100vw", display: "flex", justifyContent: "space-around", padding: "50px 0px 0px 0px"}}>
+        <GameSettings />
+        <PlayersGrid />
       </div>
   );
 }
