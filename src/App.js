@@ -5,7 +5,8 @@ import AppRouter from "./AppRouter";
 export const MAFIA_STATES = {
   LOGIN: 'login',
   LOBBY: 'lobby',
-  GAME: 'game'
+  GAME: 'game',
+  LOAD: 'load'
 }
 
 const defaultState = {

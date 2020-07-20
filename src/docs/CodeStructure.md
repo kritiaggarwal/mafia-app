@@ -4,8 +4,11 @@
 - `App.js` - Sets up global state
 
 ## Common Code
-- `AppRouter.js` - Sets up header and actual view
+- `AppRouter.js` - Sets up header and actual view - handling all the callbacks here too
 - `HeaderLayout/HeaderLayout.js` - [TODO] Shows Mafia logo, Text div, Round text (based on global game state)
+
+## FullScreenSpinner
+- `FullScreenSpinner/FullScreenSpinner.js` - Spinner
 
 ## Login
 - `LoginLayout/LoginLayout.js` - Sets up Login screen with input and logo
