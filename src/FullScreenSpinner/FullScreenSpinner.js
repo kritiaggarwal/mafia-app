@@ -1,9 +1,10 @@
 import React from 'react';
 import { Spinner, SpinnerSize } from '@fluentui/react';
+import { containerStyles } from "./FullScreenSpinnerStyles";
 
 function FullScreenSpinner() {
   return (
-      <div style={{minHeight: "65vh", minWidth: "100vw", display: "flex", flexDirection: "row", justifyContent: "center"}}>
+      <div style={containerStyles()}>
         <Spinner size={SpinnerSize.large} />
       </div>
   );
