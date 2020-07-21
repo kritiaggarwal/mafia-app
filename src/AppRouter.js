@@ -6,6 +6,14 @@ import GameLayout from "./GameLayout/GameLayout";
 import HeaderLayout from "./HeaderLayout/HeaderLayout";
 import FullScreenSpinner from "./FullScreenSpinner/FullScreenSpinner";
 
+function AppRouter() {
+  return (
+      <div style={{display: "flex", flexDirection: "column"}}>
+        {RenderView()}
+      </div>
+  );
+}
+
 function RenderView() {
   const [state, dispatch] = useGlobalState();
 
@@ -46,15 +54,6 @@ function RenderView() {
     default:
       return <div>tbd</div>;
   }
-}
-
-
-function AppRouter() {
-  return (
-      <div style={{display: "flex", flexDirection: "column"}}>
-        {RenderView()}
-      </div>
-  );
 }
 
 export default AppRouter;
