@@ -9,6 +9,3 @@ Game View (text) | Styling and based on state showing different text| Okay | Joy
 Chat | Related to sync chat plug-in | Lots | Kriti
 API Integration | Sync with backend - figure which component needs what data | Lots | Sharon
 Sync | Sync with backend + SignalR | Lots | Sharon
-
-
-- Figure what data you need to display information in your components - we can mock till server apis are ready
