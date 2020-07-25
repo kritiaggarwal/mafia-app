@@ -46,3 +46,13 @@ export const invitationCodeStyles = (() => ({
   backgroundColor: "#97B788", 
   textAlign: "center"
 }));
+
+export const waitingMsgTextStyles = (() => ({
+  height: "153px",
+  width: "709px",
+  color: "#E0E0E0",
+  fontFamily: "Arial",
+  fontSize: "60px",
+  fontStyle: "italic",
+  lineHeight: "67px"
+}));
