@@ -8,3 +8,15 @@ export const containerStyles = (() => ({
   inHeight: "65vh", 
   justifyContent: "space-between"
 }));
+
+export const playerContainerStyles = (()=>({
+  height: "201px",
+  width: "156px",
+  display: "inline-block"
+}));
+
+export const avatarStyles = (()=>({
+  borderRadius: "50%",
+  height: "147px",
+  width: "156px"
+}));
