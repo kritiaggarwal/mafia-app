@@ -34,17 +34,36 @@ export const containerStyles = (() => ({
 }));
 
 export const invitationCodeTextStyles = (() => ({
-  margin: "0px 0px 10px 0px"
+  margin: "0px 0px 10px 0px",
+  height: "76.76px",
+  width: "758px",
+  color: "#E0E0E0",
+  fontFamily: "Arial",
+  fontSize: "47px",
+  lineHeight: "53px"
 }))
 
 export const invitationCodeStyles = (() => ({
+  borderRadius: "2px",
   margin: "0px 0px 60px 0px", 
   fontSize: "80px", 
   height: "90px", 
-  width: "300px", 
+  width: "696px", 
   color: "#000000", 
   backgroundColor: "#97B788", 
   textAlign: "center"
+}));
+
+export const conferenceLinkStyles = (() => ({
+  borderRadius: "2px",
+  margin: "0px 0px 60px 0px", 
+  fontSize: "30px",
+  height: "50px",
+  width: "696px",
+  color: "#000",
+  backgroundColor: "#97B788",
+  textAlign: "center",
+  fontFamily: "Helvetica Neue"
 }));
 
 export const waitingMsgTextStyles = (() => ({
@@ -56,3 +75,14 @@ export const waitingMsgTextStyles = (() => ({
   fontStyle: "italic",
   lineHeight: "67px"
 }));
+
+export const conferenceLinkTextStyles = (() => ({
+  margin: "0px 0px 10px 0px",
+  height: "52px",
+  width: "348px",
+  color:"#E0E0E0",
+  fontFamily: "Arial",
+  fontSize: "43px",
+  lineHeight: "48px"
+}));
+

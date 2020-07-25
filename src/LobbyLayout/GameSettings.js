@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {MAFIA_STATES, useGlobalState} from '../App';
 import { Button, TextField } from '@fluentui/react';
-import { containerStyles, invitationCodeTextStyles, invitationCodeStyles, getTextStyles, getButtonStyles, waitingMsgTextStyles} from "./GameSettingsStyles";
+import { containerStyles, invitationCodeTextStyles, invitationCodeStyles, getTextStyles, getButtonStyles, waitingMsgTextStyles, conferenceLinkTextStyles, conferenceLinkStyles} from "./GameSettingsStyles";
 
 function GameSettings() {
   const [state, dispatch] = useGlobalState();
@@ -9,20 +9,27 @@ function GameSettings() {
   const enoughPlayers = true; // todo read this from some global state post roster syncing
   const gameCode = "HDJF"; // todo read this from state
   const isOrganizer = false; // todo read this from some state - show text and not button
+  const confLink = "https://chat.whatsapp.com/jendlwndwjieh"
   return (
       <div style={containerStyles()}>
         <div style={invitationCodeTextStyles()}>Invite your friends with this code!</div> 
         <div style={invitationCodeStyles()}>{gameCode}</div>
-        
-        <div>
           {isOrganizer
             ? <div>
-              <TextField readonly={!isOrganizer} styles={getTextStyles()} label="Enter conference link here (optional)" placeholder="Enter text here" onBlur={(data) => setLink(data.target.value)}/>
-              <Button disabled={!enoughPlayers} text="Start Game" styles={getButtonStyles()}  onClick={() => dispatch({mafiaScreen: MAFIA_STATES.GAME})}/>
+                <TextField readonly={!isOrganizer} styles={getTextStyles()} label="Enter conference link here (optional)" placeholder="Enter text here" onBlur={(data) => setLink(data.target.value)}/>
+                <Button disabled={!enoughPlayers} text="Start Game" styles={getButtonStyles()}  onClick={() => dispatch({mafiaScreen: MAFIA_STATES.GAME})}/>
               </div>
-            : <div style={waitingMsgTextStyles()}>Waiting for your organizer to start the game!</div>
+            : <div>
+               {confLink 
+                  ? <div>
+                      <div style={conferenceLinkTextStyles()}>Conference Link</div>
+                      <div style={conferenceLinkStyles()}>{confLink}</div>
+                    </div>
+                  : null
+                }
+              <div style={waitingMsgTextStyles()}>Waiting for your organizer to start the game!</div>
+              </div>
           }
-        </div>
       </div>
   );
 }
