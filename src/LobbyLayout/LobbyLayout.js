@@ -3,11 +3,11 @@ import GameSettings from "./GameSettings";
 import PlayersGrid from "../PlayersGrid/PlayersGrid";
 import { containerStyles } from "./LobbyLayoutStyles";
 
-function LobbyLayout() {
+function LobbyLayout(props) {
   return (
       <div style={containerStyles()}>
-        <GameSettings />
-        <PlayersGrid />
+        <GameSettings link = {props.link}/>
+        <PlayersGrid players = {props.profiles}/>
       </div>
   );
 }

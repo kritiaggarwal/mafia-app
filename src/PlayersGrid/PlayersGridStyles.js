@@ -10,6 +10,7 @@ export const containerStyles = (() => ({
 }));
 
 export const playerContainerStyles = (()=>({
+  margin: "",
   height: "201px",
   width: "156px",
   display: "inline-block"

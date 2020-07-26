@@ -3,7 +3,7 @@ import PlayersList from "../PlayersList/PlayersList";
 import ChatPane from "../ChatPane/ChatPane";
 import { containerStyles } from "./GameLayoutStyles";
 
-function GameLayout() {
+function GameLayout(props) {
   return (
       <div style={containerStyles()}>
         <PlayersList />
