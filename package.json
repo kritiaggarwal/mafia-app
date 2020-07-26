@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@fluentui/react": "^7.123.3",
+    "@microsoft/signalr": "^3.1.6",
+    "@stardust-ui/react": "^0.40.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",

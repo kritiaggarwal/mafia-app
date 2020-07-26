@@ -6,11 +6,12 @@ export const MAFIA_STATES = {
   LOGIN: 'login',
   LOBBY: 'lobby',
   GAME: 'game',
-  LOAD: 'load'
+  LOAD: 'load',
+  CHAT : 'chat'
 }
 
 const defaultState = {
-  mafiaScreen: MAFIA_STATES.LOGIN
+  mafiaScreen: MAFIA_STATES.CHAT
 }
 
 const GlobalStateContext = React.createContext(defaultState); // to read

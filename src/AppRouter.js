@@ -5,6 +5,7 @@ import LobbyLayout from "./LobbyLayout/LobbyLayout";
 import GameLayout from "./GameLayout/GameLayout";
 import HeaderLayout from "./HeaderLayout/HeaderLayout";
 import FullScreenSpinner from "./FullScreenSpinner/FullScreenSpinner";
+import ChatPane from './ChatPane/ChatPane';
 
 function AppRouter() {
   return (
@@ -43,6 +44,8 @@ function RenderView() {
   }
 
   switch (state['mafiaScreen']) {
+    case MAFIA_STATES.CHAT:
+      return <ChatPane />; 
     case MAFIA_STATES.LOGIN:
       return (<><HeaderLayout screen={MAFIA_STATES.LOGIN}/><LoginLayout onGameCreate={onGameCreate} onGameFetch={onGameFetch}/></>);
     case MAFIA_STATES.LOBBY:
