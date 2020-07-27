@@ -32,7 +32,6 @@
 - `roundState`
 - `isPrimaryMafia`
 - `currentPlayerRole`
-- `votes`
 
 **Callbacks:** onKillVillager, onVote
 
@@ -49,15 +48,16 @@
         - read `vote` from players and display
         - display radio button to vote
 
-**players object structure:** will pass name, role (may be undefined), vote
+**players object structure:** will pass name, role (may be undefined), vote (may be undefined)
 
 ## Game Layout
 ### Props
 - `gameState`
 - `roundState`
 - `roundNumber`
-- `isPrimaryMafia`
+- `primaryMafiaName`
 - `currentPlayerRole`
+- `yourName`
 - `previousKillRole`
 
 ### Game Layout Logic
@@ -71,9 +71,9 @@
                 - read `currentPlayerRole`
                     - "Villager" -> Say Mafia is killing
                     - "Mafia"
-                        - read `isPrimaryMafia`
-                            - True ->  Ask them to choose to kill someone
-                            - False -> Ask them to help primary mafia
+                        - read `primaryMafiaName`
+                            - if equal to `yourName` ->  Ask them to choose to kill someone
+                            - else -> Ask them to help `primaryMafiaName`
 
             - "Day" -> Say Mafia killed someone
     - "COMPLETED-MAFIA" -> Say Mafia win
