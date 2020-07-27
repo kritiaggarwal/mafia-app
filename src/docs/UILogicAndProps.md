@@ -31,7 +31,7 @@
 - `players`
 - `roundState`
 - `isPrimaryMafia`
-- `currentPlayerRole`
+- `currentPlayerName`
 
 **Callbacks:** onKillVillager, onVote
 
@@ -48,7 +48,7 @@
         - read `vote` from players and display
         - display radio button to vote
 
-**players object structure:** will pass name, role (may be undefined), vote (may be undefined)
+**players object structure:** will pass name, role (may be undefined), vote (may be undefined), alive/dead
 
 ## Game Layout
 ### Props
