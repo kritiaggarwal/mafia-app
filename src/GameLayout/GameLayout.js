@@ -6,7 +6,15 @@ import { containerStyles } from "./GameLayoutStyles";
 function GameLayout() {
   return (
       <div style={containerStyles()}>
-        <PlayersList players = {[{name:"suzie",role:"mafia",alive:"dead", vote:"5"}, {name:"suzie2",role:"villager",alive:"alive", vote:"89"}]} roundState = "Day" isPrimaryMafia = "true" currentPlayerName = "suzie" />
+        <PlayersList players = {
+          [{name:"Suzie",role:"mafia",alive:"alive", vote:"1"}, 
+          {name:"Viji",role:"mafia",alive:"dead", vote:"2"}, 
+          {name:"Sharon",role:"villager",alive:"dead", vote:"1"},
+          {name:"Kriti",role:"villager",alive:"alive", vote:"0"},
+          {name:"Joyeeta",role:"villager",alive:"alive", vote:"2"}, 
+          {name:"Neeli",role:"mafia",alive:"dead", vote:"0"}]
+          } 
+          roundState = "day" isPrimaryMafia = "true" currentPlayerName = "Suzie" />
         <div>Mafia is killing</div>
         <ChatPane />
       </div>
