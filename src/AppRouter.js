@@ -6,6 +6,45 @@ import GameLayout from "./GameLayout/GameLayout";
 import HeaderLayout from "./HeaderLayout/HeaderLayout";
 import FullScreenSpinner from "./FullScreenSpinner/FullScreenSpinner";
 
+const playerNames = [
+  {name: "Sharon", id: 1, role: "Villager", isAlive: false, vote: 1},
+  {name: "Kriti", id: 2, role: "Villager", isAlive: false, vote: 2},
+  {name: "Joyeeta", id: 3, role: "Villager", isAlive: false, vote: 0},
+  {name: "Vijitha", id: 4, role: "Villager", isAlive: false, vote: 2},
+  {name: "Devendra", id: 5, role: "Villager", isAlive: false, vote: 1},
+  {name: "Preet", id: 6, role: "Mafia", isAlive: false, vote: 1},
+  {name: "Vishal", id: 7, role: "Mafia", isAlive: false, vote: 0}
+];
+
+const Winners = [
+  {name: "Sharon", id: 1, role: "Villager", isAlive: false, vote: 1},
+  {name: "Kriti", id: 1, role: "Villager", isAlive: false, vote: 2},
+  {name: "Joyeeta", id: 1, role: "Villager", isAlive: false, vote: 0},
+  {name: "Vijitha", id: 1, role: "Villager", isAlive: false, vote: 2},
+  {name: "Devendra", id: 1, role: "Villager", isAlive: false, vote: 1},
+];
+
+//https://chat.whatsapp.com/jendlwndwjiehdjhjhfuwih
+const confLink = "https://chat.whatsapp.com/jendlwndwjiehdjhjhfuwih"
+
+const currentPlayerRole = "Mafia";      //Mafia or Villager
+
+const roundNumber = 2;
+
+const currentPlayerDead = false;
+
+const gameState = "COMPLETED-VILLAGERS";          //STARTED, COMPLETED-VILLAGERS, COMPLETED-MAFIA
+
+const roundState = "Night";                                 //day or night
+
+const previousKillRole = "Mafia";                      //Villager of Mafia
+
+const primaryMafiaName="Kriti";                     
+const yourName="Joyeeta";
+
+const gameCode = "HDJF"; // todo read this from state
+const isOrganizer = true; // todo read this from some state - show text and not button
+
 function AppRouter() {
   return (
       <div style={{display: "flex", flexDirection: "column"}}>
@@ -124,6 +163,7 @@ function RenderView() {
   }
 
   const onGameStart = () => {
+    dispatch({mafiaScreen: MAFIA_STATES.GAME});
     // state['connection'].invoke("startGame", state.code);
   }
   
@@ -143,9 +183,34 @@ function RenderView() {
     case MAFIA_STATES.LOGIN:
       return (<><HeaderLayout screen={MAFIA_STATES.LOGIN}/><LoginLayout onGameCreate={onGameCreate} onGameFetch={onGameFetch}/></>);
     case MAFIA_STATES.LOBBY:
-      return (<><HeaderLayout screen={MAFIA_STATES.LOBBY}/><LobbyLayout /></>);
+      return (<><HeaderLayout screen={MAFIA_STATES.LOBBY}/>
+                <LobbyLayout profiles={playerNames} 
+                link={confLink} 
+                onGameStart={onGameStart} 
+                onLinkAdded={onLinkAdded}
+                gameCode={gameCode}
+                isOrganizer={isOrganizer}/></>);
     case MAFIA_STATES.GAME:
-      return (<><HeaderLayout screen={MAFIA_STATES.GAME}/><GameLayout /></>);
+      return (<>
+                <HeaderLayout 
+                screen={MAFIA_STATES.GAME} 
+                link={confLink} 
+                currentPlayerRole={currentPlayerRole} 
+                roundNumber={roundNumber} 
+                currentPlayerDead={currentPlayerDead}
+                gameState={gameState}/>
+                <GameLayout 
+                currentPlayerRole={currentPlayerRole} 
+                roundNumber={roundNumber} 
+                currentPlayerDead={currentPlayerDead}
+                gameState={gameState}
+                roundState={roundState}
+                previousKillRole={previousKillRole}
+                primaryMafiaName={primaryMafiaName}
+                yourName={yourName}
+                winners={Winners}
+                />
+              </>);
     case MAFIA_STATES.LOAD:
         return (<><HeaderLayout screen={MAFIA_STATES.LOAD}/><FullScreenSpinner /></>);
     default:
