@@ -11,7 +11,8 @@ export const MAFIA_STATES = {
 
 const defaultState = {
   mafiaScreen: MAFIA_STATES.LOAD,
-  connection: undefined
+  connection: undefined,
+  data: undefined
 }
 
 const GlobalStateContext = React.createContext(defaultState); // to read
