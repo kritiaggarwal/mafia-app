@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import AppRouter from "./AppRouter";
+import AppConnector from "./AppConnector";
 
 export const MAFIA_STATES = {
   LOGIN: 'login',
@@ -10,7 +10,8 @@ export const MAFIA_STATES = {
 }
 
 const defaultState = {
-  mafiaScreen: MAFIA_STATES.LOGIN
+  mafiaScreen: MAFIA_STATES.LOAD,
+  connection: undefined
 }
 
 const GlobalStateContext = React.createContext(defaultState); // to read
@@ -40,7 +41,7 @@ function App() {
   return (
     <GlobalStateProvider>
       <div className="App">
-        <AppRouter />
+        <AppConnector/>
       </div>
     </GlobalStateProvider>
   );
