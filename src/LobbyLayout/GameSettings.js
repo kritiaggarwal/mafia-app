@@ -6,9 +6,10 @@ import { containerStyles, invitationCodeTextStyles, invitationCodeStyles, getTex
 function GameSettings(props) {
   const [state, dispatch] = useGlobalState();
   const [link, setLink] = useState("");
-  const enoughPlayers = true; // todo read this from some global state post roster syncing
+  const enoughPlayers = props.noOfPlayers > 6; // todo read this from some global state post roster syncing
   const gameCode = "HDJF"; // todo read this from state
   const isOrganizer = true; // todo read this from some state - show text and not button
+  const topMargin = props.link ? "140px":"380px";
   return (
       <div style={containerStyles()}>
         <div style={invitationCodeTextStyles()}>Invite your friends with this code!</div> 
@@ -20,13 +21,12 @@ function GameSettings(props) {
               </div>
             : <div>
                {props.link 
-                  ? <div>
+                  &&<div>
                       <div style={conferenceLinkTextStyles()}>Conference Link</div>
                       <div style={conferenceLinkStyles()}>{props.link}</div>
                     </div>
-                  : null
                 }
-              <div style={waitingMsgTextStyles()}>Waiting for your organizer to start the game!</div>
+              <div style={waitingMsgTextStyles(topMargin)}>Waiting for your organizer to start the game!</div>
               </div>
           }
       </div>

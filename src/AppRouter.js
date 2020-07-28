@@ -6,6 +6,27 @@ import GameLayout from "./GameLayout/GameLayout";
 import HeaderLayout from "./HeaderLayout/HeaderLayout";
 import FullScreenSpinner from "./FullScreenSpinner/FullScreenSpinner";
 
+const playerNames = [
+  {name: "Sharon", role: "Villager"},
+  {name: "Kriti", role: "Villager"},
+  {name: "Joyeeta", role: "Villager"},
+  {name: "Vijitha", role: "Villager"},
+  {name: "Devendra", role: "Villager"},
+  {name: "Preet", role: "Mafia"},
+  {name: "Vishal", role: "Mafia"}
+];
+
+//https://chat.whatsapp.com/jendlwndwjiehdjhjhfuwih
+const confLink = ""
+
+const currentPlayerRole = "Villager";      //Mafia or Villager
+
+const roundNumber = 2;
+
+const currentPlayerDead = false;
+
+const gameState = "COMPLETED-MAFIA";          //STARTED, COMPLETED-VILLAGERS, COMPLETED-MAFIA
+
 function AppRouter() {
   return (
       <div style={{display: "flex", flexDirection: "column"}}>
@@ -42,13 +63,30 @@ function RenderView() {
     // make network call to vote out villager
   }
 
+  const onLinkAdded = (link) => {
+    // make network call to get the link
+  }
+
   switch (state['mafiaScreen']) {
     case MAFIA_STATES.LOGIN:
       return (<><HeaderLayout screen={MAFIA_STATES.LOGIN}/><LoginLayout onGameCreate={onGameCreate} onGameFetch={onGameFetch}/></>);
     case MAFIA_STATES.LOBBY:
-      return (<><HeaderLayout screen={MAFIA_STATES.LOBBY}/><LobbyLayout /></>);
+      return (<><HeaderLayout screen={MAFIA_STATES.LOBBY}/><LobbyLayout profiles={playerNames} link={confLink} /></>);
     case MAFIA_STATES.GAME:
-      return (<><HeaderLayout screen={MAFIA_STATES.GAME}/><GameLayout /></>);
+      return (<>
+                <HeaderLayout 
+                screen={MAFIA_STATES.GAME} 
+                link={confLink} 
+                currentPlayerRole={currentPlayerRole} 
+                roundNumber={roundNumber} 
+                currentPlayerDead={currentPlayerDead}
+                gameState={gameState}/>
+                <GameLayout 
+                currentPlayerRole={currentPlayerRole} 
+                roundNumber={roundNumber} 
+                currentPlayerDead={currentPlayerDead}
+                gameState={gameState}/>
+              </>);
     case MAFIA_STATES.LOAD:
         return (<><HeaderLayout screen={MAFIA_STATES.LOAD}/><FullScreenSpinner /></>);
     default:
