@@ -4,6 +4,7 @@
 - `App.js` - Sets up global state
 
 ## Common Code
+- `AppConnector.js` - Sets up SignalR Connection
 - `AppRouter.js` - [TODO] Sets up header and actual view - handling all the callbacks here too
 - `HeaderLayout/HeaderLayout.js` - [TODO] Shows Mafia logo, Text div, Round text (based on global game state)
 - `HeaderLayout/HeaderLayoutStyles.js` - [TODO] CSS For Header
