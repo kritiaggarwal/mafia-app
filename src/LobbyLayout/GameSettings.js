@@ -4,16 +4,14 @@ import { containerStyles, invitationCodeTextStyles, invitationCodeStyles, getTex
 
 function GameSettings(props) {
   const enoughPlayers = props.noOfPlayers > 6; // todo read this from some global state post roster syncing
-  const gameCode = "HDJF"; // todo read this from state
-  const isOrganizer = true; // todo read this from some state - show text and not button
   const topMargin = props.link ? "140px":"270px";
   return (
       <div style={containerStyles()}>
         <div style={invitationCodeTextStyles()}>Invite your friends with this code!</div> 
-        <div style={invitationCodeStyles()}>{gameCode}</div>
-          {isOrganizer
+        <div style={invitationCodeStyles()}>{props.gameCode}</div>
+          {props.isOrganizer
             ? <div>
-                <TextField readonly={!isOrganizer} styles={getTextStyles()} label="Enter conference link here (optional)" placeholder="Enter text here" onBlur={props.onLinkAdded}/>
+                <TextField readonly={!props.isOrganizer} styles={getTextStyles()} label="Enter conference link here (optional)" placeholder="Enter text here" onBlur={props.onLinkAdded}/>
                 <Button disabled={!enoughPlayers} text="Start Game" styles={getButtonStyles()}  onClick={props.onGameStart}/>
               </div>
             : <div>

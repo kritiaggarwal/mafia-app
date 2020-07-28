@@ -5,35 +5,23 @@ import PlayersGrid from "../PlayersGrid/PlayersGrid";
 import { containerStyles, getTextStyles } from "./GameLayoutStyles";
 
 function GameLayout(props) {
-  const roundState = "Night";                                 //day or night
-  const primaryMafiaName="Kriti";                     
-  const yourName="Joyeeta";
-  const previousKillRole = "Mafia";                      //Villager of Mafia
-
-  const Winners = [
-    {name: "Sharon", role: "Villager"},
-    {name: "Kriti", role: "Villager"},
-    {name: "Joyeeta", role: "Villager"},
-    {name: "Vijitha", role: "Villager"},
-    {name: "Devendra", role: "Villager"},
-  ];
-  
+ 
   //middle pane text for gameState = "STARTED"
-  const text1 = roundState === "Night" 
-  ? (props.roundNumber !== 1 && `You eliminated a ${previousKillRole}!`)  
+  const text1 = props.roundState === "Night" 
+  ? (props.roundNumber !== 1 && `You eliminated a ${props.previousKillRole}!`)  
   : "Mafia killed a Villager!";
   
   const text2 = props.currentPlayerDead 
   ? "Watch the game unfold silently!" 
-  : (roundState === "Night" 
+  : (props.roundState === "Night" 
       ? (props.currentPlayerRole==="Villager"
           ? "Mafia is killing... while city sleeps!" 
-          : ((primaryMafiaName===yourName) 
+          : ((props.primaryMafiaName===props.yourName) 
               ? "You are the primary mafia"
-              : `${primaryMafiaName} is the primary mafia`))
+              : `${props.primaryMafiaName} is the primary mafia`))
       :  "Discuss and vote to eliminate someone from the city");
 
-  const text3 = props.currentPlayerRole === "Mafia" && roundState === "Night" && !props.currentPlayerDead && (primaryMafiaName===yourName ? "Discuss with your teammates and choose a villager to kill" 
+  const text3 = props.currentPlayerRole === "Mafia" && props.roundState === "Night" && !props.currentPlayerDead && (props.primaryMafiaName===props.yourName ? "Discuss with your teammates and choose a villager to kill" 
   : "Discuss with your fellow mafia and help the primary mafia choose a villager to kill");
 
   const text4 = props.gameState === "COMPLETED-MAFIA" ?  "More Mafia than villagers" : "All Mafia Killed!";
@@ -56,7 +44,7 @@ function GameLayout(props) {
         }
         {props.gameState === "STARTED"
         ? <ChatPane />
-        : <PlayersGrid players={Winners} />
+        : <PlayersGrid players={props.winners} />
         }
       </div>
   );
