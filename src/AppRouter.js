@@ -33,7 +33,7 @@ const roundNumber = 2;
 
 const currentPlayerDead = false;
 
-const gameState = "COMPLETED-VILLAGERS";          //STARTED, COMPLETED-VILLAGERS, COMPLETED-MAFIA
+const gameState = "STARTED";          //STARTED, COMPLETED-VILLAGERS, COMPLETED-MAFIA
 
 const roundState = "Night";                                 //day or night
 
