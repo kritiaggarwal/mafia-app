@@ -2,15 +2,14 @@ export const containerStyles = (() => ({
   minHeight: "65vh", 
   minWidth: "100vw", 
   display: "flex", 
-  justifyContent: "space-around", 
-  padding: "50px 0px 0px 0px"
+  justifyContent: "space-around",
 }));
 
 export const getTextStyles = (() => ({
-  width: "500px",
+  width: "400px",
   color: "#E0E0E0",
-  fontFamily: "American Typewriter",
-  fontSize: "50px",
-  lineHeight: "69px",
-  margin: "0px auto 0px auto"
+  fontFamily: "Helvetica Neue",
+  fontSize: "40px",
+  lineHeight: "59px",
+  height: "650px"
 }));

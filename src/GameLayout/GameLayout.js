@@ -6,13 +6,16 @@ import { containerStyles, getTextStyles } from "./GameLayoutStyles";
 
 function GameLayout(props) {
   const roundState = "Night";                                 //day or night
-  const primaryMafiaName="Joyeeta";                     
+  const primaryMafiaName="Kriti";                     
   const yourName="Joyeeta";
   const previousKillRole = "Mafia";                      //Villager of Mafia
 
   const Winners = [
-    {name: "Preet", role: "Mafia"},
-    {name: "Vishal", role: "Mafia"}
+    {name: "Sharon", role: "Villager"},
+    {name: "Kriti", role: "Villager"},
+    {name: "Joyeeta", role: "Villager"},
+    {name: "Vijitha", role: "Villager"},
+    {name: "Devendra", role: "Villager"},
   ];
   
   //middle pane text for gameState = "STARTED"

@@ -8,8 +8,7 @@ export const containerStyles = ((props) => ({
   inHeight: "65vh", 
   justifyContent: "space-between",
   height: "640px",
-  overflow: "auto",
-  marginBottom: "20px"
+  borderRadius: "10px"
 }));
 
 export const getTextStyles = (() => ({
@@ -47,8 +46,8 @@ export const playerContainerStyles = ((props)=>({
 
 export const avatarStyles = (()=>({
   borderRadius: "50%",
-  height: "147px",
-  width: "156px"
+  height: "130px",
+  width: "146px"
 }));
 
 export const getPlayerProfileStyles = (() => ({

@@ -17,15 +17,15 @@ const playerNames = [
 ];
 
 //https://chat.whatsapp.com/jendlwndwjiehdjhjhfuwih
-const confLink = ""
+const confLink = "https://chat.whatsapp.com/jendlwndwjiehdjhjhfuwih"
 
-const currentPlayerRole = "Villager";      //Mafia or Villager
+const currentPlayerRole = "Mafia";      //Mafia or Villager
 
 const roundNumber = 2;
 
 const currentPlayerDead = false;
 
-const gameState = "COMPLETED-MAFIA";          //STARTED, COMPLETED-VILLAGERS, COMPLETED-MAFIA
+const gameState = "COMPLETED-VILLAGERS";          //STARTED, COMPLETED-VILLAGERS, COMPLETED-MAFIA
 
 function AppRouter() {
   return (
@@ -52,6 +52,7 @@ function RenderView() {
   }
   
   const onGameStart = (code) => {
+    dispatch({mafiaScreen: MAFIA_STATES.GAME});
     // make network call to start game given code
   }
   
@@ -71,7 +72,7 @@ function RenderView() {
     case MAFIA_STATES.LOGIN:
       return (<><HeaderLayout screen={MAFIA_STATES.LOGIN}/><LoginLayout onGameCreate={onGameCreate} onGameFetch={onGameFetch}/></>);
     case MAFIA_STATES.LOBBY:
-      return (<><HeaderLayout screen={MAFIA_STATES.LOBBY}/><LobbyLayout profiles={playerNames} link={confLink} /></>);
+      return (<><HeaderLayout screen={MAFIA_STATES.LOBBY}/><LobbyLayout profiles={playerNames} link={confLink} onGameStart={onGameStart} onLinkAdded={onLinkAdded}/></>);
     case MAFIA_STATES.GAME:
       return (<>
                 <HeaderLayout 
