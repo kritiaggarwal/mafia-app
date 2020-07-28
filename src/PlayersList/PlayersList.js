@@ -4,46 +4,59 @@ import { ChoiceGroup} from 'office-ui-fabric-react/lib/ChoiceGroup';
 
 class PlayersList extends Component {
 
+  constructor(props) {
+    super(props)
+    this.showButtonForGeneralVoting = false;
+    this.showButtonForMafiaVoting = false;
+    this.handleVote = this.handleVote.bind(this);
+  }
+  
   getPlayerRows(showButtonForGeneralVoting, showButtonForMafiaVoting) {
     let playerRows = [];
-    for(player in this.props.players){
+    for(let player of this.props.players){
       let showButton = false;
-      if ((showButtonForGeneralVoting && player.alive == 'alive') || 
-      showButtonForMafiaVoting && player.alive == 'alive' && player.role == "villager") {
+      if ((showButtonForGeneralVoting && player.isAlive) || 
+      showButtonForMafiaVoting && player.isAlive && player.role == "Villager") {
         showButton = true;
       }
-      playerRow = { key: player.playerId , text: '',
+      let playerRow = { key: player.id , text: '',
         onRenderField: (props, render) => {
             return (
               <div style = {{display:"flex",alignItems:"center",margin:"10px", justifyContent:"space-between", minWidth:"330px"}}>
                 <img style= {{height:"50px", borderRadius:"50%"}} src={"https://api.adorable.io/avatars/" + player.name + ".png"}></img>
                 <div style = {{fontFamily:"arial", fontSize:"20px"}}>{player.name}</div>
                 <div style = {{fontFamily:"arial", fontSize:"20px", color:"#BF2626", 
-                visibility: player.vote ? "visible": "hidden"}}>{player.vote}</div>
+                visibility: (typeof player.vote !== 'undefined') ? "visible": "hidden"}}>{player.vote}</div>
                 <div style = {{visibility: showButton?"visible":"hidden"}}>{render(props)}</div>
               </div>
             );
           } 
-        ,styles: { root: { backgroundColor:"rgba(247,105,105,0.56)"}}}; //todo - background, scrolling, callbacks, row css
+        ,styles: { root: { backgroundColor:"rgba(247,105,105,0.56)"}}}; //todo - background, scrolling, row css
       playerRows.push(playerRow);
     }
     return playerRows;
   }
 
-  render() {
-    let showButtonForGeneralVoting = false;
-    let showButtonForMafiaVoting = false;
+  handleVote (event, option) {
+    //option.key is player id
+    if (this.showButtonForGeneralVoting) {
+      this.props.vote(option.key);
+    } else if (this.showButtonForMafiaVoting) {
+      this.props.killVillager(option.key);
+    }
+  }
 
+  render() {
     if (this.props.roundState == "day" && this.props.isCurrentPlayerAlive) {
-      showButtonForGeneralVoting = true;
+      this.showButtonForGeneralVoting = true;
     }  else if (this.props.roundState == "night" && this.props.isPrimaryMafia) {
-      showButtonForMafiaVoting = true;
+      this.showButtonForMafiaVoting = true;
     }
     
-    const options = this.getPlayerRows(showButtonForGeneralVoting, showButtonForMafiaVoting);
+    const options = this.getPlayerRows(this.showButtonForGeneralVoting, this.showButtonForMafiaVoting);
     
     return <div style={containerStyles()}>
-      <ChoiceGroup options={options}/>
+      <ChoiceGroup options={options} onChange={this.handleVote} />
     </div>;
   }
 }
