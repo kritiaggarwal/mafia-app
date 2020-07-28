@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { containerStyles } from "./PlayersListStyles";
 import { ChoiceGroup} from 'office-ui-fabric-react/lib/ChoiceGroup';
-
+import { ROLES, ROUND_STATE } from "../App";
 class PlayersList extends Component {
 
   constructor(props) {
@@ -13,10 +13,10 @@ class PlayersList extends Component {
   
   getPlayerRows(showButtonForGeneralVoting, showButtonForMafiaVoting) {
     let playerRows = [];
-    for(let player of this.props.players){
+    this.props.players.forEach(player => {
       let showButton = false;
       if ((showButtonForGeneralVoting && player.isAlive) || 
-      showButtonForMafiaVoting && player.isAlive && player.role == "Villager") {
+      showButtonForMafiaVoting && player.isAlive && player.role == ROLES.VILLAGER) {
         showButton = true;
       }
       let playerRow = { key: player.id , text: '',
@@ -33,7 +33,7 @@ class PlayersList extends Component {
           } 
         ,styles: { root: { backgroundColor:"rgba(247,105,105,0.56)"}}}; //todo - background, scrolling, row css
       playerRows.push(playerRow);
-    }
+    });
     return playerRows;
   }
 
@@ -47,9 +47,9 @@ class PlayersList extends Component {
   }
 
   render() {
-    if (this.props.roundState == "day" && this.props.isCurrentPlayerAlive) {
+    if (this.props.roundState == ROUND_STATE.DAY && this.props.isCurrentPlayerAlive) {
       this.showButtonForGeneralVoting = true;
-    }  else if (this.props.roundState == "night" && this.props.isPrimaryMafia) {
+    }  else if (this.props.roundState == ROUND_STATE.NIGHT && this.props.isPrimaryMafia) {
       this.showButtonForMafiaVoting = true;
     }
     

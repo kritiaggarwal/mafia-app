@@ -9,6 +9,23 @@ export const MAFIA_STATES = {
   LOAD: 'load'
 }
 
+export const ROLES = {
+  VILLAGER: 'villager',
+  MAFIA: 'mafia'
+}
+
+export const GAME_STATE = {
+  WAITING: 'Waiting',
+  STARTED: 'Started',
+  COMPLETED_MAFIA: 'Completed-Mafia',
+  COMPLETED_VILLAGER: 'Completed-Villager'
+}
+
+export const ROUND_STATE = {
+  DAY: 'Day',
+  NIGHT: 'Night'
+}
+
 const defaultState = {
   mafiaScreen: MAFIA_STATES.LOAD,
   connection: undefined,
