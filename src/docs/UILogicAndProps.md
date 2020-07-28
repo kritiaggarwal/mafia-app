@@ -7,6 +7,7 @@
     - >6 -> Should enable button
 - read `conferenceLink`
     - If Present -> Should display conference link
+- read `gameCode`
 
 **Callbacks:** onGameStarted, onLinkAdded
 
