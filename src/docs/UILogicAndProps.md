@@ -32,6 +32,7 @@
 - `roundState`
 - `isPrimaryMafia`
 - `currentPlayerName`
+- `isCurrentPlayerAlive` 
 
 **Callbacks:** onKillVillager, onVote
 
