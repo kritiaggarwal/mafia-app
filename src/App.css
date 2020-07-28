@@ -6,3 +6,26 @@
   display: flex;
   font-family: Helvetica,Arial,sans-serif;
 }
+
+/* Start: Chat Styles */
+.react-chat-viewerBox{
+  border: none !important;
+}
+
+.react-chat-messagesList{
+  background-color: rgb(108, 141, 151);
+}
+
+/* .react-chat-inputBox{
+  background-color: rgb(108, 141, 151);
+} */
+
+.react-chat-additional {
+  color: white !important;
+}
+
+.react-chat-rightBubble{
+  background-color: #45802A !important;
+  border-color: #45802A !important;
+}
+/* End: Chat Styles */
