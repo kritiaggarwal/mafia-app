@@ -10,6 +10,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "react": "^16.13.1",
+    "react-chat-plugin": "^0.1.14",
     "react-dom": "^16.13.1",
     "react-perfect-scrollbar": "^1.5.8",
     "react-scripts": "3.4.1",

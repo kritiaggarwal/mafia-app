@@ -74,11 +74,11 @@ function RenderView() {
     // make network call to start game given code
   }
   
-  const killVillager = (userId, mafiaId) => {
+  const killVillager = (userId) => {
     // make network call to kill villager
   }
   
-  const vote = (userId, mafiaId) => {
+  const vote = (userId) => {
     // make network call to vote out villager
   }
 
@@ -116,6 +116,19 @@ function RenderView() {
                 primaryMafiaName={primaryMafiaName}
                 yourName={yourName}
                 winners={Winners}
+                killVillager={killVillager} 
+                vote={vote} 
+                players = {
+                  [{name:"Suzie",role:"Mafia",isAlive:true, vote:1, id:1}, 
+                  {name:"Viji",role:"Mafia",isAlive:false, vote:2, id:2}, 
+                  {name:"Sharon",role:"Villager",isAlive:false, vote:1, id:3},
+                  {name:"Kriti",role:"Villager",isAlive:true, vote:0, id:4},
+                  {name:"Joyeeta",role:"Villager",isAlive:true, vote:2, id:5}, 
+                  {name:"Neeli",role:"Mafia",isAlive:false, vote:0, id:6}]
+                  } 
+                roundState = "day" 
+                isPrimaryMafia = {true} 
+                isCurrentPlayerAlive = {true}
                 />
               </>);
     case MAFIA_STATES.LOAD:

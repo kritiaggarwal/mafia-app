@@ -4,8 +4,8 @@ export const containerStyles  = (() => ({
   color: "#000000", 
   textAlign: "center", 
   backgroundColor: "#6C8D97", 
-  padding: "30px 0px 0px 0px", 
-  minHeight: "65vh", 
+  padding: "0", 
+  minHeight: "68vh", 
   justifyContent: "space-between"
 }));
 
