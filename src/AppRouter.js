@@ -133,7 +133,16 @@ function RenderView() {
 
     state['connection'].on("onReceivedMessage", data => {
       // todo kriti
-      // handleMessageReceived(data);
+      console.log("message received", data);
+      // let isMafiaChat = true;
+      // if (isMafiaChat) {
+      //   mafiaMessages.concat({...data});
+      //   console.log(mafiaMessages);
+      // } else {
+      //   villageMessages.concat({...data});
+      //   console.log(mafiaMessages);
+      // }
+      // handleChatMessageReceived(data);
     });
   }
   
@@ -161,9 +170,11 @@ function RenderView() {
     // state['connection'].invoke("killVillager", state.code, state.currentPlayerName, state.roundNumber, nameOfVotedVillager);
   }
 
-  const sendMessage = (message) => {
+
+  const sendMessage = (messageObject, role) => {
     // todo kriti
-    // state['mafia-connection'].invoke("sendMessage", code-role, message);
+    // state['mafia-connection'].invoke("sendMessage", `${code}-${role}`, messageObject.text, messageObject);
+    console.log('Message', messageObject, role);
   }
 
   switch (state['mafiaScreen']) {
@@ -203,7 +214,9 @@ function RenderView() {
                   killVillager={killVillager} 
                   vote={vote} 
                   players = {state['data'].members}
-                  isPrimaryMafia = {state['data'].isPrimaryMafia}/>
+                  isPrimaryMafia = {state['data'].isPrimaryMafia}
+                  sendMessage={sendMessage}
+                  />
               </>);
     case MAFIA_STATES.LOAD:
         return (<><HeaderLayout screen={MAFIA_STATES.LOAD}/><FullScreenSpinner /></>);

@@ -5,7 +5,7 @@ export const containerStyles  = (() => ({
   textAlign: "center", 
   backgroundColor: "#6C8D97", 
   padding: "0", 
-  minHeight: "68vh", 
+  minHeight: "70vh", 
   justifyContent: "space-between"
 }));
 

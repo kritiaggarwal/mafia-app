@@ -29,7 +29,9 @@ export const ROUND_STATE = {
 const defaultState = {
   mafiaScreen: MAFIA_STATES.LOAD,
   connection: undefined,
-  data: undefined
+  data: undefined,
+  villageMessages: [],
+  mafiaMessages: []
 }
 
 const GlobalStateContext = React.createContext(defaultState); // to read
