@@ -16,149 +16,142 @@ function AppRouter() {
 }
 
 function RenderView() {
-  const [state, dispatch] = useGlobalState();
   // REALLY BAD WAY TO CODE - JUST DOING THINGS QUICKLY
-    
-  const handleOnGameChanged = (data) => {
-    let oldMembersObject = state.data ? state.data.members : [{name: "Vishal", id: 1, role: ROLES.MAFIA, isAlive: false, isPrimaryMafia: false}, {name: "Devendra", id: 4, role: ROLES.VILLAGER, isAlive: false, isPrimaryMafia: false}, {name: "Mitin", id: 5, role: ROLES.VILLAGER, isAlive: true, isPrimaryMafia: false}, {name: "Vijitha", id: 6, role: ROLES.VILLAGER, isAlive: true, isPrimaryMafia: false}, {name: "Joyeeta", id: 7, role: ROLES.VILLAGER, isAlive: true, isPrimaryMafia: false}, {name: "Sharon", id: 2, role: ROLES.MAFIA, isAlive: true, isPrimaryMafia: true}, {name: "Kriti", id: 3, role: ROLES.MAFIA, isAlive: true, isPrimaryMafia: false}] ;
-    let roundInformation = {num: 2, state: "Night", votes: {"Sharon": "Vishal", "Kriti": "Vishal", "Vishal": "Devendra", "Devendra": "Vishal"}}; // read from API
-    let members = [{name: "Vishal", id: 1, role: ROLES.MAFIA, isAlive: true, isPrimaryMafia: true}, {name: "Devendra", id: 4, role: ROLES.VILLAGER, isAlive: false, isPrimaryMafia: false}, {name: "Mitin", id: 5, role: ROLES.VILLAGER, isAlive: true, isPrimaryMafia: false}, {name: "Vijitha", id: 6, role: ROLES.VILLAGER, isAlive: true, isPrimaryMafia: false}, {name: "Joyeeta", id: 7, role: ROLES.VILLAGER, isAlive: true, isPrimaryMafia: false}, {name: "Sharon", id: 2, role: ROLES.MAFIA, isAlive: true, isPrimaryMafia: false}, {name: "Kriti", id: 3, role: ROLES.MAFIA, isAlive: false, isPrimaryMafia: false}] // read from API
-    let gameState = GAME_STATE.STARTED; // read from API
-    let code = "ABCD"; // read from API
-    let conferenceLink = "conferenceLink" // read from API
+  const [state, dispatch] = useGlobalState();
 
-    let sampleDataObject = {
-      gameState,
-      isPlayerOrganizer: true, // state.data.isPlayerOrganizer,
-      currentPlayerName: "Sharon", // state.data.currentPlayerName,
-      code, 
-      conferenceLink
-    }
+  if (state.connection && state.data) {
+    state.connection.on("onGameChanged", data => {
+      let oldMembersObject = state.data ? state.data.members : [] ;
+      let roundInformation = data.round;
+      let members = data.members;
+      let gameState = data.gameState;
+      let code = data.code;
+      let conferenceLink = data.meetingLink;
 
-    // WHOM - EVERYONE
-    // WHEN - ALWAYS
-    // figure which screen to navigate to
-    let screen = figureWhichScreen(sampleDataObject.gameState);
-    // figure current player name, role, status
-    let currentPlayerDetails = figureCurrentPlayerDetails(members, sampleDataObject.currentPlayerName);
-    sampleDataObject = {...sampleDataObject, ...currentPlayerDetails};
+      let sampleDataObject = {
+        gameState,
+        isPlayerOrganizer: state.data.isPlayerOrganizer,
+        currentPlayerName: state.data.currentPlayerName,
+        code, 
+        conferenceLink
+      }
 
-    if (sampleDataObject.gameState === GAME_STATE.STARTED) {   
+      // WHOM - EVERYONE
+      // WHEN - ALWAYS
+      // figure which screen to navigate to
+      let screen = figureWhichScreen(sampleDataObject.gameState);
+      // figure current player name, role, status
+      let currentPlayerDetails = figureCurrentPlayerDetails(members, sampleDataObject.currentPlayerName);
+      sampleDataObject = {...sampleDataObject, ...currentPlayerDetails};
+
+      if (sampleDataObject.gameState === GAME_STATE.STARTED) {   
+        // todo kriti
+        // state.connection.invoke("joinGame", name, code-role); 
+        
+        // WHOM - EVERYONE
+        // WHEN - AFTER DAY VOTING
+        // figure previous kill role
+        if (roundInformation.round !== 1 && roundInformation.state === ROUND_STATE.NIGHT) {
+          sampleDataObject = {...sampleDataObject, previousKillRole: figurePreviousKillRole(members, oldMembersObject)};
+        }
+
+        // WHOM - MAFIA
+        // WHEN - AT NIGHT
+        if (currentPlayerDetails.currentPlayerRole === ROLES.MAFIA && roundInformation.state === ROUND_STATE.NIGHT) {
+          // figure primary mafia details
+          let primaryMafiaName = figurePrimaryMafia(members);
+          let isPrimaryMafia = primaryMafiaName === sampleDataObject.currentPlayerName;
+          sampleDataObject = {...sampleDataObject, isPrimaryMafia, primaryMafiaName};
+        }
+
+        // WHOM - EVERYONE
+        // WHEN - DURING DAY
+        // figure voting information
+        if (roundInformation.state === ROUND_STATE.DAY) {
+          members = figureVotes(roundInformation.votes, members);
+        }
+        sampleDataObject = {
+          ...sampleDataObject,
+          members,
+          roundNumber: roundInformation.round,
+          roundState: roundInformation.state,
+        }
+      } else if (sampleDataObject.gameState === GAME_STATE.COMPLETED_MAFIA) {
+          // WHOM - EVERYONE
+          // WHEN - GAME OVER
+          sampleDataObject = {
+            ...sampleDataObject,
+            winners: getAllByRole(members, ROLES.MAFIA),
+            members
+          }
+      } else if (sampleDataObject.gameState === GAME_STATE.COMPLETED_VILLAGER) {
+          // WHOM - EVERYONE
+          // WHEN - GAME OVER
+          sampleDataObject = {
+            ...sampleDataObject,
+            winners: getAllByRole(members, ROLES.VILLAGER),
+            members
+          }
+      } else {
+        sampleDataObject = {
+          ...sampleDataObject,
+          members,
+        }
+      }
+
+      dispatch({...state, mafiaScreen: screen, data: sampleDataObject});
+    });
+
+    state.connection.on("ReceivedMessage", data => {
       // todo kriti
-      // state['connection'].invoke("joinGame", name, code-role); 
-      
-      // WHOM - EVERYONE
-      // WHEN - AFTER DAY VOTING
-      // figure previous kill role
-      if (roundInformation.num !== 1 && roundInformation.state === ROUND_STATE.NIGHT) {
-        sampleDataObject = {...sampleDataObject, previousKillRole: figurePreviousKillRole(members, oldMembersObject)};
-      }
-
-      // WHOM - MAFIA
-      // WHEN - AT NIGHT
-      if (currentPlayerDetails.currentPlayerRole === ROLES.MAFIA && roundInformation.state === ROUND_STATE.NIGHT) {
-        // figure primary mafia details
-        let primaryMafiaName = figurePrimaryMafia(members);
-        let isPrimaryMafia = primaryMafiaName === sampleDataObject.currentPlayerName;
-        sampleDataObject = {...sampleDataObject, isPrimaryMafia, primaryMafiaName};
-      }
-
-      // WHOM - EVERYONE
-      // WHEN - DURING DAY
-      // figure voting information
-      if (roundInformation.state === ROUND_STATE.DAY) {
-        members = figureVotes(roundInformation.votes, members);
-      }
-      sampleDataObject = {
-        ...sampleDataObject,
-        members,
-        roundNumber: roundInformation.num,
-        roundState: roundInformation.state,
-      }
-    } else if (sampleDataObject.gameState === GAME_STATE.COMPLETED_MAFIA) {
-        // WHOM - EVERYONE
-        // WHEN - GAME OVER
-        sampleDataObject = {
-          ...sampleDataObject,
-          winners: getAllByRole(members, ROLES.MAFIA),
-          members
-        }
-    } else if (sampleDataObject.gameState === GAME_STATE.COMPLETED_VILLAGER) {
-        // WHOM - EVERYONE
-        // WHEN - GAME OVER
-        sampleDataObject = {
-          ...sampleDataObject,
-          winners: getAllByRole(members, ROLES.VILLAGER),
-          members
-        }
-    } else {
-      sampleDataObject = {
-        ...sampleDataObject,
-        members,
-      }
-    }
-
-    dispatch({mafiaScreen: screen, data: sampleDataObject});
+      // handleMessageReceived(data);
+    });
   }
 
   const onGameCreate = (name) => {
-    // state['connection'].invoke("createGame", name);
+    state.connection.invoke("createGame", name);
     
     let sampleDataObject = {
       isPlayerOrganizer: true, // set off
       currentPlayerName: name
     };
-    handleOnGameChanged(); // todo remove
-    // dispatch({mafiaScreen: MAFIA_STATES.LOAD, data: sampleDataObject});
+    dispatch({...state, mafiaScreen: MAFIA_STATES.LOAD, data: sampleDataObject});
     
   }
   
   const onGameFetch = (name, code) => {
-    // state['connection'].invoke("joinGame", name, code);
+    state.connection.invoke("joinGame", name, code);
 
     let sampleDataObject = {
       code: code, // set  off
       currentPlayerName: name,
       isPlayerOrganizer: false, // set off
-      members: [{name: "Vishal", id: 1, role: ROLES.MAFIA}, {name: "Sharon", id: 2, role: ROLES.VILLAGER}, {name: "Kriti", id: 3, role: ROLES.MAFIA}]  // todo shmathew remove
     }
 
-    dispatch({mafiaScreen: MAFIA_STATES.LOAD, data: sampleDataObject});
+    dispatch({...state, mafiaScreen: MAFIA_STATES.LOAD, data: sampleDataObject});
   }
-  
-  if (state['connection']) {
-    state['connection'].on("onGameChanged", data => {
-      handleOnGameChanged(data);
-    });
 
-    state['connection'].on("onReceivedMessage", data => {
-      // todo kriti
-      // handleMessageReceived(data);
-    });
-  }
   
-  const onLinkAdded = () => {
+  const onLinkAdded = (link) => {
     console.log("Link added being called");
-    // state['connection'].invoke("linkAdded", state.code, link);
+    state.connection.invoke("addLink", state.data.code, link.target.value);
   }
 
   const onGameStart = () => {
     console.log("Game started");
-    dispatch({mafiaScreen: MAFIA_STATES.GAME});
-    // state['connection'].invoke("startGame", state.code);
-
+    state.connection.invoke("startGame", state.data.code);
   }
   
   const killVillager = (userId) => {
     var nameOfVillagerToBeKilled = figureNameById(state.data['members'], userId);
     console.log("Villager killed: " + nameOfVillagerToBeKilled);
-    // state['connection'].invoke("killVillager", state.code, state.currentPlayerName, nameOfVillagerToBeKilled);
+    // state.connection.invoke("killVillager", state.code, state.currentPlayerName, nameOfVillagerToBeKilled);
   }
   
   const vote = (userId) => {
     var nameOfVotedVillager = figureNameById(state.data['members'], userId);
     console.log("Voted against villager: " + nameOfVotedVillager);
-    // state['connection'].invoke("killVillager", state.code, state.currentPlayerName, state.roundNumber, nameOfVotedVillager);
+    // state.connection.invoke("killVillager", state.code, state.currentPlayerName, state.roundNumber, nameOfVotedVillager);
   }
 
   const sendMessage = (message) => {
@@ -166,7 +159,7 @@ function RenderView() {
     // state['mafia-connection'].invoke("sendMessage", code-role, message);
   }
 
-  switch (state['mafiaScreen']) {
+  switch (state.mafiaScreen) {
     case MAFIA_STATES.LOGIN:
       return (<><HeaderLayout screen={MAFIA_STATES.LOGIN}/><LoginLayout onGameCreate={onGameCreate} onGameFetch={onGameFetch}/></>);
     case MAFIA_STATES.LOBBY:

@@ -3,7 +3,7 @@ import { Button, TextField } from '@fluentui/react';
 import { containerStyles, invitationCodeTextStyles, invitationCodeStyles, getTextStyles, getButtonStyles, waitingMsgTextStyles, conferenceLinkTextStyles, conferenceLinkStyles} from "./GameSettingsStyles";
 
 function GameSettings(props) {
-  const enoughPlayers = props.noOfPlayers > 6; // todo read this from some global state post roster syncing
+  const enoughPlayers = true; // props.noOfPlayers > 6; // todo read this from some global state post roster syncing
   const topMargin = props.link ? "140px":"270px";
   return (
       <div style={containerStyles()}>
