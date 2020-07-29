@@ -1,18 +1,12 @@
 import React from 'react';
 import { containerStyles } from "./ChatPaneStyles";
 import ChatBox from 'react-chat-plugin';
+import { ROUND_STATE, ROLES } from "../App";
 class ChatPane extends React.Component {
   imageBaseUrl = 'https://api.adorable.io/avatars/285/';
   imageEndUrl = '@adorable.png';
 
   state = {
-    cityState: 'sleeping',  // sleeping/awake
-    user: {
-      id: 1,
-      name: 'User1',
-      isMafia: true,
-      isAlive: true
-    },
     mafiaMessages: [
       {
         author: {
@@ -71,13 +65,12 @@ class ChatPane extends React.Component {
 
   // Function to send message in mafia group chat
   handleOnSendMessageInMafiaChat = (message) => {
-    const { id, name } = { ...this.state.user} ;
-    const avatarUrl = `${this.imageBaseUrl}${name}${this.imageEndUrl}`;
+    const avatarUrl = `${this.imageBaseUrl}${this.props.currentPlayerName}${this.imageEndUrl}`;
     this.setState({
       mafiaMessages: this.state.mafiaMessages.concat({
         author: {
-          username: name,
-          id: id,
+          username: this.props.currentPlayerName,
+          id: this.props.currentPlayerId,
           avatarUrl: avatarUrl
         },
         text: message,
@@ -87,19 +80,18 @@ class ChatPane extends React.Component {
     });
   }
   render() {
-    // const showMafiaChat = (this.state.user.isMafia && this.state.cityState === 'sleeping');
     return (
       <div style={containerStyles()}>
         {/* // Mafia Chat Box */}
         <div>
           <ChatBox
             messages={this.state.mafiaMessages}
-            userId={this.state.user.id}
+            userId={this.props.currentPlayerId}
             onSendMessage={this.handleOnSendMessageInMafiaChat}
             width={'100vw'}
             height={'68vh'}
             placeholder="Mafia Group Chat"
-            disableInput={this.state.cityState === 'awake' || (!(this.state.user.isAlive && this.state.user.isMafia))}
+            disableInput={this.props.roundState === ROUND_STATE.DAY || (!(!this.props.currentPlayerDead && (this.props.currentPlayerRole === ROLES.MAFIA)))}
           />
         </div>
       </div>
