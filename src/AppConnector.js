@@ -11,8 +11,12 @@ function AppConnector() {
       connection = new signalR.HubConnectionBuilder()
         .withUrl("https://mafiaapp20200725162443.azurewebsites.net/chathub")
         .build();
-        connection.start({ withCredentials: false, sameSite: "Lax" }).catch((error) => { console.log(error)} )
-        dispatch({mafiaScreen: MAFIA_STATES.LOGIN, connection: connection})
+        connection.start({ withCredentials: false, sameSite: "Lax" })
+          .then(() => {
+            dispatch({...state, mafiaScreen: MAFIA_STATES.LOGIN, connection: connection})
+          })
+          .catch((error) => { console.log(error)} )
+        
     } catch(error) {
       console.log(error);
     }

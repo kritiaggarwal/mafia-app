@@ -7,7 +7,7 @@ import {MAFIA_STATES, useGlobalState} from '../App';
 
 function PlayersGrid(props) {
   const [state] = useGlobalState();
-  const gameScreen = state['mafiaScreen'] === MAFIA_STATES.GAME;
+  const gameScreen = state.mafiaScreen === MAFIA_STATES.GAME;
   const headerText = gameScreen ? "Winners!":"Players";
   const width = gameScreen ? "400px":"800px";
   const gridStyle = gameScreen ? "auto auto": "auto auto auto";
