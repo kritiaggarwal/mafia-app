@@ -45,7 +45,7 @@ function GameLayout(props) {
           </div>
         }
         {props.gameState === GAME_STATE.STARTED
-        ? <ChatPane />
+        ? <ChatPane roundState={props.roundState} currentPlayerName={props.yourName} currentPlayerDead={props.currentPlayerDead} currentPlayerRole={props.currentPlayerRole} currentPlayerId={props.currentPlayerId}/>
         : <PlayersGrid players={props.winners} />
         }
       </div>

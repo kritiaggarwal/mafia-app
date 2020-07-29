@@ -98,15 +98,15 @@ function RenderView() {
 
       dispatch({mafiaScreen: screen, data: sampleDataObject});
   }
-  const onGameCreate = (name) => {
     
+  const onGameCreate = (name) => {
     // state['connection'].invoke("createGame", name);
     
     let sampleDataObject = {
       isPlayerOrganizer: true, // set off
       currentPlayerName: name
     };
-    handleOnGameChanged();
+    handleOnGameChanged(); // todo remove
     // dispatch({mafiaScreen: MAFIA_STATES.LOAD, data: sampleDataObject});
     
   }
@@ -142,12 +142,14 @@ function RenderView() {
   }
   
   const killVillager = (userId) => {
-    console.log("Villager killed: " + userId);
+    var nameOfVillagerToBeKilled = figureNameById(state.data['members'], userId);
+    console.log("Villager killed: " + nameOfVillagerToBeKilled);
     // state['connection'].invoke("killVillager", state.code, state.currentPlayerName, nameOfVillagerToBeKilled);
   }
   
   const vote = (userId) => {
-    console.log("Voted against villager: " + userId);
+    var nameOfVotedVillager = figureNameById(state.data['members'], userId);
+    console.log("Voted against villager: " + nameOfVotedVillager);
     // state['connection'].invoke("killVillager", state.code, state.currentPlayerName, state.roundNumber, nameOfVotedVillager);
   }
 
@@ -180,6 +182,7 @@ function RenderView() {
                   gameState={state['data'].gameState}/>
                 <GameLayout 
                   currentPlayerRole={state['data'].currentPlayerRole} 
+                  currentPlayerId={state['data'].currentPlayerId}
                   roundNumber={state['data'].roundNumber} 
                   currentPlayerDead={state['data'].currentPlayerDead}
                   gameState={state['data'].gameState}
@@ -220,13 +223,20 @@ function figureVotes(votes, members) {
 
 function figurePreviousKillRole(newMembersList, oldMembersList) {
   // one really shit O(n2) approach
-  newMembersList.forEach(newMember => {
-    oldMembersList.forEach(oldMember => {
+  var i = 0, j = 0, foundNewlyDead = false;
+
+  while (i < newMembersList.length && !foundNewlyDead) {
+    var newMember = newMembersList[i];
+    j = 0;
+    while (j < oldMembersList.length && !foundNewlyDead) {
+      var oldMember = oldMembersList[j];
       if (oldMember.id === newMember.id && oldMember.isAlive && !newMember.isAlive) {
         return newMember.role;
       }
-    })
-  });
+      j++;
+    }
+    i++;
+  }
 }
 
 function figurePrimaryMafia(members) {
@@ -243,11 +253,20 @@ function figureCurrentPlayerDetails(members, nameToFind) {
       return true;
   });
   return {
+    currentPlayerId: currentPlayer.id,
     currentPlayerRole: currentPlayer.role,
     currentPlayerDead: !currentPlayer.isAlive,
     currentPlayerName: currentPlayer.name,
     isPrimaryMafia: currentPlayer.isPrimaryMafia
   }
+}
+
+function figureNameById(members, idToFind) {
+  var player = members.find(function(member) {
+    if(member.id === idToFind)
+      return true;
+  });
+  return player.name;
 }
 
 function figureWhichScreen(state) {
