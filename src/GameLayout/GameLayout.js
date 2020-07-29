@@ -32,7 +32,7 @@ function GameLayout(props) {
       <div style={containerStyles()}>
         <PlayersList killVillager={props.killVillager} vote={props.vote} 
         players={props.players} roundState={props.roundState} 
-        isPrimaryMafia={props.isPrimaryMafia} isCurrentPlayerAlive = {!props.currentPlayerDead}/>
+        isPrimaryMafia={props.isPrimaryMafia} currentPlayerName={props.yourName} isCurrentPlayerAlive = {!props.currentPlayerDead}/>
         {props.gameState === GAME_STATE.STARTED
         ? <div style = {getTextStyles()}>
             <p>{text1}</p>
