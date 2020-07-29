@@ -6,9 +6,9 @@ import { containerStyles, getMiddleDivStyles, getRightDivStyles, getConferenceLi
 
 function HeaderLayout(props) {
   const [state] = useGlobalState();
-  const showDiv = state['mafiaScreen'] === MAFIA_STATES.GAME;
-  const showRound = state['mafiaScreen'] === MAFIA_STATES.GAME;
-  const showLink = state['mafiaScreen'] === MAFIA_STATES.GAME;
+  const showDiv = state.mafiaScreen === MAFIA_STATES.GAME;
+  const showRound = state.mafiaScreen === MAFIA_STATES.GAME;
+  const showLink = state.mafiaScreen === MAFIA_STATES.GAME;
   const divPart1 = (props.currentPlayerRole === ROLES.MAFIA)? "You are part of the Mafia! ":"You are a Villager! ";
   const divPart2 = (props.currentPlayerDead)?"You are DEAD! ":((props.currentPlayerRole === ROLES.MAFIA)?"Kill the Villagers!":"Find the Mafia!");
   const divText = divPart1 + divPart2; // todo fill according to game state;
