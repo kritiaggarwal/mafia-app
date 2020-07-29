@@ -34,5 +34,6 @@ export const getRightDivStyles = (() => ({
 export const containerStyles = (() => ({
     display: "flex", 
     flexDirection: "row", 
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    margin: "10px 22px 0px 0px"
 }));

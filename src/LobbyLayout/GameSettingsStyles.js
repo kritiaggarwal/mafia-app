@@ -88,7 +88,7 @@ export const waitingMsgTextStyles = ((props) => ({
   fontStyle: "italic",
   lineHeight: "67px",
   marginTop: props,
-  marginLeft: "36px"
+  marginLeft: "28px"
 }));
 
 export const conferenceLinkTextStyles = (() => ({
