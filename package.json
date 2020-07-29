@@ -15,7 +15,6 @@
     "react-perfect-scrollbar": "^1.5.8",
     "react-scripts": "3.4.1",
     "typescript": "^3.2.1"
-
   },
   "scripts": {
     "start": "react-scripts start",
