@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { containerStyles } from "./PlayersListStyles";
+import { containerStyles, playerRowStyles, imageStyles, playerNameStyles, voteStyles, radioButtonStyles } from "./PlayersListStyles";
 import { ChoiceGroup} from 'office-ui-fabric-react/lib/ChoiceGroup';
+import 'office-ui-fabric-react/dist/css/fabric.css';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 class PlayersList extends Component {
 
@@ -19,19 +21,38 @@ class PlayersList extends Component {
       showButtonForMafiaVoting && player.isAlive && player.role == "Villager") {
         showButton = true;
       }
-      let playerRow = { key: player.id , text: '',
+      let backgroundColor = "transparent";
+      if (player.role == "Mafia") { 
+        if (player.isAlive) {
+          backgroundColor = "#ba797d"
+        } else {
+          backgroundColor = "#c2a5a7"
+        }
+      } else if (!player.isAlive) {
+        backgroundColor = "rgba(200,200,200,0.56)";
+      }
+      let playerRow = { key: player.id , 
         onRenderField: (props, render) => {
             return (
-              <div style = {{display:"flex",alignItems:"center",margin:"10px", justifyContent:"space-between", minWidth:"330px"}}>
-                <img style= {{height:"50px", borderRadius:"50%"}} src={"https://api.adorable.io/avatars/" + player.name + ".png"}></img>
-                <div style = {{fontFamily:"arial", fontSize:"20px"}}>{player.name}</div>
-                <div style = {{fontFamily:"arial", fontSize:"20px", color:"#BF2626", 
-                visibility: (typeof player.vote !== 'undefined') ? "visible": "hidden"}}>{player.vote}</div>
-                <div style = {{visibility: showButton?"visible":"hidden"}}>{render(props)}</div>
-              </div>
+      <div className="ms-Grid" dir="ltr" >
+        <div className="ms-Grid-row" style = {playerRowStyles(backgroundColor)}>
+          <div className="ms-Grid-col ms-sm4 " >
+            <img  style= {imageStyles()} src={"https://api.adorable.io/avatars/70/" + player.name + ".png"}></img>
+          </div>
+          <div className="ms-Grid-col ms-sm4" style = {playerNameStyles()}>
+            {this.props.currentPlayerName == player.name? "YOU" : player.name}
+          </div>
+          <div className="ms-Grid-col ms-sm2 " style = {voteStyles(player.vote)}>
+            +{player.vote}
+          </div>
+          <div className="ms-Grid-col ms-sm2 " style = {radioButtonStyles(showButton)}>
+            {render(props)}
+          </div>
+        </div>
+      </div>
             );
           } 
-        ,styles: { root: { backgroundColor:"rgba(247,105,105,0.56)"}}}; //todo - background, scrolling, row css
+      };
       playerRows.push(playerRow);
     }
     return playerRows;
@@ -55,9 +76,9 @@ class PlayersList extends Component {
     
     const options = this.getPlayerRows(this.showButtonForGeneralVoting, this.showButtonForMafiaVoting);
     
-    return <div style={containerStyles()}>
-      <ChoiceGroup options={options} onChange={this.handleVote} />
-    </div>;
+    return <PerfectScrollbar style = {containerStyles()}>
+        <ChoiceGroup options={options} onChange={this.handleVote} />
+    </PerfectScrollbar>;
   }
 }
 
