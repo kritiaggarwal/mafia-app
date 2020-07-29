@@ -4,6 +4,7 @@ import { ChoiceGroup} from 'office-ui-fabric-react/lib/ChoiceGroup';
 import 'office-ui-fabric-react/dist/css/fabric.css';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
+import { ROLES, ROUND_STATE } from "../App";
 class PlayersList extends Component {
 
   constructor(props) {
@@ -15,14 +16,14 @@ class PlayersList extends Component {
   
   getPlayerRows(showButtonForGeneralVoting, showButtonForMafiaVoting) {
     let playerRows = [];
-    for(let player of this.props.players){
+    this.props.players.forEach(player => {
       let showButton = false;
       if ((showButtonForGeneralVoting && player.isAlive) || 
-      showButtonForMafiaVoting && player.isAlive && player.role == "Villager") {
+      showButtonForMafiaVoting && player.isAlive && player.role == ROLES.VILLAGER) {
         showButton = true;
       }
       let backgroundColor = "transparent";
-      if (player.role == "Mafia") { 
+      if (player.role == ROLES.MAFIA) { 
         if (player.isAlive) {
           backgroundColor = "#ba797d"
         } else {
@@ -54,7 +55,7 @@ class PlayersList extends Component {
           } 
       };
       playerRows.push(playerRow);
-    }
+    });
     return playerRows;
   }
 
@@ -68,9 +69,9 @@ class PlayersList extends Component {
   }
 
   render() {
-    if (this.props.roundState == "day" && this.props.isCurrentPlayerAlive) {
+    if (this.props.roundState == ROUND_STATE.DAY && this.props.isCurrentPlayerAlive) {
       this.showButtonForGeneralVoting = true;
-    }  else if (this.props.roundState == "night" && this.props.isPrimaryMafia) {
+    }  else if (this.props.roundState == ROUND_STATE.NIGHT && this.props.isPrimaryMafia) {
       this.showButtonForMafiaVoting = true;
     }
     

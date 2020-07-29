@@ -3,37 +3,37 @@ import PlayersList from "../PlayersList/PlayersList";
 import ChatPane from "../ChatPane/ChatPane";
 import PlayersGrid from "../PlayersGrid/PlayersGrid";
 import { containerStyles, getTextStyles } from "./GameLayoutStyles";
+import { ROLES, GAME_STATE, ROUND_STATE } from '../App';
 
 function GameLayout(props) {
  
-  //middle pane text for gameState = "STARTED"
-  const text1 = props.roundState === "Night" 
+  const text1 = props.roundState === ROUND_STATE.NIGHT 
   ? (props.roundNumber !== 1 && `You eliminated a ${props.previousKillRole}!`)  
   : "Mafia killed a Villager!";
   
   const text2 = props.currentPlayerDead 
   ? "Watch the game unfold silently!" 
-  : (props.roundState === "Night" 
-      ? (props.currentPlayerRole==="Villager"
+  : (props.roundState === ROUND_STATE.NIGHT
+      ? (props.currentPlayerRole === ROLES.VILLAGER
           ? "Mafia is killing... while city sleeps!" 
           : ((props.primaryMafiaName===props.yourName) 
               ? "You are the primary mafia"
               : `${props.primaryMafiaName} is the primary mafia`))
       :  "Discuss and vote to eliminate someone from the city");
 
-  const text3 = props.currentPlayerRole === "Mafia" && props.roundState === "Night" && !props.currentPlayerDead && (props.primaryMafiaName===props.yourName ? "Discuss with your teammates and choose a villager to kill" 
+  const text3 = props.currentPlayerRole === ROLES.MAFIA && props.roundState === ROUND_STATE.NIGHT && !props.currentPlayerDead && (props.primaryMafiaName===props.yourName ? "Discuss with your teammates and choose a villager to kill" 
   : "Discuss with your fellow mafia and help the primary mafia choose a villager to kill");
 
-  const text4 = props.gameState === "COMPLETED-MAFIA" ?  "More Mafia than villagers" : "All Mafia Killed!";
+  const text4 = props.gameState === GAME_STATE.COMPLETED_MAFIA ?  "More Mafia than villagers" : "All Mafia Killed!";
 
-  const text5 = props.gameState === "COMPLETED-MAFIA" ? "Mafia WIN!" : "Villagers WIN!";
+  const text5 = props.gameState === GAME_STATE.COMPLETED_MAFIA ? "Mafia WIN!" : "Villagers WIN!";
   
   return (
       <div style={containerStyles()}>
         <PlayersList killVillager={props.killVillager} vote={props.vote} 
         players={props.players} roundState={props.roundState} 
-        isPrimaryMafia={props.isPrimaryMafia} currentPlayerName ={props.currentPlayerName} isCurrentPlayerAlive = {props.isCurrentPlayerAlive}/>
-        {props.gameState === "STARTED" 
+        isPrimaryMafia={props.isPrimaryMafia} currentPlayerName={props.yourName} isCurrentPlayerAlive = {!props.currentPlayerDead}/>
+        {props.gameState === GAME_STATE.STARTED
         ? <div style = {getTextStyles()}>
             <p>{text1}</p>
             <p>{text2}</p>
@@ -44,8 +44,8 @@ function GameLayout(props) {
             <p>{text5}</p>
           </div>
         }
-        {props.gameState === "STARTED"
-        ? <ChatPane />
+        {props.gameState === GAME_STATE.STARTED
+        ? <ChatPane roundState={props.roundState} currentPlayerName={props.yourName} currentPlayerDead={props.currentPlayerDead} currentPlayerRole={props.currentPlayerRole} currentPlayerId={props.currentPlayerId}/>
         : <PlayersGrid players={props.winners} />
         }
       </div>
