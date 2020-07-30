@@ -2,6 +2,10 @@
   "name": "mafia-app",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "12.16.0",
+    "npm": "6.13.4"
+  },
   "dependencies": {
     "@aspnet/signalr": "^1.1.4",
     "@fluentui/react": "^7.123.3",
